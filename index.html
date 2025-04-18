@@ -51,14 +51,30 @@
       margin-top: 1rem;
       color: #0f0;
     }
+
+    #resetButton {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #resetButton:hover {
+      background-color: #caffca;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-<h1 style="color:red;">Solve Or Die !</h1>
     <div class="target">Find: <span id="targetCode"></span></div>
     <div class="code-list" id="codeList"></div>
     <div class="message" id="message"></div>
+    <button id="resetButton">🔁 Play Again</button>
   </div>
 
   <script>
@@ -67,9 +83,12 @@
     const targetDisplay = document.getElementById('targetCode');
     const codeList = document.getElementById('codeList');
     const message = document.getElementById('message');
+    const resetButton = document.getElementById('resetButton');
+
     let targetCode = '';
     let intervalId;
     let gameOver = false;
+    let tries = 3;
 
     function getRandomCode() {
       const letter = letters[Math.floor(Math.random() * letters.length)];
@@ -93,22 +112,39 @@
     }
 
     function handleClick(clickedCode) {
-      if (clickedCode === targetCode && !gameOver) {
+      if (gameOver) return;
+
+      if (clickedCode === targetCode) {
         gameOver = true;
         clearInterval(intervalId);
         const rewardCode = getRandomCode();
         message.textContent = '✔ Puzzle Solved! Your code: ' + rewardCode;
+        resetButton.style.display = 'inline-block';
       } else {
-        message.textContent = '❌ Wrong code. Try again.';
+        tries--;
+        if (tries > 0) {
+          message.textContent = `❌ Wrong code. Tries left: ${tries}`;
+        } else {
+          gameOver = true;
+          clearInterval(intervalId);
+          message.textContent = '💥 Game Over. No tries left!';
+          resetButton.style.display = 'inline-block';
+        }
       }
     }
+
+    resetButton.onclick = () => {
+      startPuzzle();
+      resetButton.style.display = 'none';
+    };
 
     function startPuzzle() {
       targetCode = getRandomCode();
       targetDisplay.textContent = targetCode;
-      gameOver = false;
       message.textContent = '';
-      intervalId = setInterval(generateCodes, 800); // change every second
+      gameOver = false;
+      tries = 3;
+      intervalId = setInterval(generateCodes, 1000);
     }
 
     startPuzzle();
