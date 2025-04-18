@@ -13,6 +13,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     .container {
@@ -67,6 +68,19 @@
     #resetButton:hover {
       background-color: #caffca;
     }
+
+    /* Full-screen Saw image */
+    #sawImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://wallpapercave.com/wp/wp2624316.jpg') no-repeat center center;
+      background-size: cover;
+      display: none;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
@@ -77,6 +91,8 @@
     <button id="resetButton">🔁 Play Again</button>
   </div>
 
+  <div id="sawImage"></div>
+
   <script>
     const letters = 'ABCDEFGH';
     const numbers = '123456789';
@@ -84,6 +100,7 @@
     const codeList = document.getElementById('codeList');
     const message = document.getElementById('message');
     const resetButton = document.getElementById('resetButton');
+    const sawImage = document.getElementById('sawImage');
 
     let targetCode = '';
     let intervalId;
@@ -129,6 +146,7 @@
           clearInterval(intervalId);
           message.textContent = '💥 Game Over. No tries left!';
           resetButton.style.display = 'inline-block';
+          showSawImage();
         }
       }
     }
@@ -145,6 +163,11 @@
       gameOver = false;
       tries = 3;
       intervalId = setInterval(generateCodes, 1000);
+    }
+
+    function showSawImage() {
+      // Show the Saw image full screen when the game is over
+      sawImage.style.display = 'block';
     }
 
     startPuzzle();
