@@ -76,23 +76,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('https://wallpapercave.com/wp/wp2624316.jpg') no-repeat center center;
+      background: url('https://cdn.discordapp.com/attachments/1041771718882119710/1362804282730217622/wp2624316-saw-wallpaper.png?ex=6803b9e4&is=68026864&hm=ee44c21ed3e3862c65764dd360ae76bedd9e5e05fb15502175ea52e7d2c68633&') no-repeat center center;
       background-size: cover;
       display: none;
       z-index: 9999;
-      color: red; /* Color for the text */
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Style for the text on the Saw image */
-    #sawText {
-      font-size: 6rem; /* Large font size */
-      color: red;
-      text-shadow: 2px 2px 10px #000; /* Adds shadow for better visibility */
-      font-weight: bold;
     }
   </style>
 </head>
@@ -104,9 +91,7 @@
     <button id="resetButton">🔁 Play Again</button>
   </div>
 
-  <div id="sawImage">
-    <div id="sawText">YOU ARE DEAD</div>
-  </div>
+  <div id="sawImage"></div>
 
   <script>
     const letters = 'ABCDEFGH';
@@ -116,7 +101,6 @@
     const message = document.getElementById('message');
     const resetButton = document.getElementById('resetButton');
     const sawImage = document.getElementById('sawImage');
-    const sawText = document.getElementById('sawText');
 
     let targetCode = '';
     let intervalId;
@@ -182,8 +166,8 @@
     }
 
     function showSawImage() {
-      // Show the Saw image full screen with the "YOU ARE DEAD" text
-      sawImage.style.display = 'flex';
+      // Show the Saw image full screen when the game is over
+      sawImage.style.display = 'block';
     }
 
     startPuzzle();
